@@ -103,7 +103,6 @@
 </head>
 <body class="antialiased">
 
-    <!-- Cabeçalho -->
     <header class="bg-white py-4 px-6 sticky top-0 z-[60] border-b border-stone-100">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex flex-col cursor-pointer" onclick="window.scrollTo(0,0)">
@@ -151,7 +150,6 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
     <section class="max-w-7xl mx-auto px-6 py-12 grid md:grid-cols-2 gap-12 items-center">
         <div class="space-y-8">
             <h1 class="text-6xl md:text-7xl serif text-stone-800 leading-tight">Sua fragrância,<br><span class="text-stone-400 italic">sua identidade.</span></h1>
@@ -164,17 +162,16 @@
             <div class="slider-container h-[550px]">
                 <div class="slides" id="heroSlider">
                     <div class="slide">
-                        <img src="images/hero1.jpg" class="w-full h-full object-cover rounded-[40px] shadow-2xl">
+                        <img src="hero1.jpg" class="w-full h-full object-cover rounded-[40px] shadow-2xl">
                     </div>
                     <div class="slide">
-                        <img src="images/hero2.jpg" class="w-full h-full object-cover rounded-[40px] shadow-2xl">
+                        <img src="hero2.jpg" class="w-full h-full object-cover rounded-[40px] shadow-2xl">
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Secção Destaques -->
     <section id="destaques" class="max-w-7xl mx-auto px-6 py-24">
         <div class="text-center mb-16">
             <span class="text-[10px] uppercase tracking-[0.4em] text-stone-400 block mb-4">Escolhas Imperdíveis</span>
@@ -183,14 +180,12 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="destaquesGrid"></div>
     </section>
 
-    <!-- Secção Catálogo -->
     <section id="catalogo" class="max-w-7xl mx-auto px-6 py-24 border-t border-stone-200">
         <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
             <div>
                 <span class="text-[10px] uppercase tracking-[0.4em] text-stone-400 block mb-4">Coleção Completa</span>
                 <h2 class="text-4xl serif">Todos os Produtos</h2>
             </div>
-            <!-- Filtros do Catálogo -->
             <div class="flex gap-2 items-center overflow-visible pb-2 w-full md:w-auto">
                 <button onclick="filtrarCatalogo('todos')" id="filter-all" class="px-6 py-2 rounded-full bg-stone-800 text-white text-[10px] uppercase tracking-widest font-bold whitespace-nowrap active-filter">Todos</button>
                 
@@ -226,7 +221,6 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="catalogoGrid"></div>
     </section>
 
-    <!-- Carrinho Lateral -->
     <div id="cartOverlay" onclick="toggleCart()" class="fixed inset-0 bg-black/20 backdrop-blur-sm hidden z-[90]"></div>
     <div id="cartPanel" class="fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-2xl translate-x-full flex flex-col z-[100]">
         <div class="p-8 border-b flex justify-between items-center">
@@ -235,7 +229,6 @@
         </div>
         <div id="cartItems" class="flex-1 overflow-y-auto p-8 space-y-6"></div>
         <div class="p-8 border-t bg-stone-50">
-            <!-- Linha de frete -->
             <div class="flex justify-between items-center mb-4 pb-4 border-b border-stone-200 text-xs">
                 <span class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">Frete</span>
                 <span class="font-semibold text-stone-500 text-right">Sob Consulta no WhatsApp</span>
@@ -248,7 +241,6 @@
         </div>
     </div>
 
-    <!-- Modal de Produto -->
     <div id="productModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden z-[110] flex items-center justify-center p-4">
         <div class="bg-white rounded-[40px] w-full max-w-2xl p-8 relative">
             <button onclick="closeProduct()" class="absolute top-6 right-8 text-stone-300 hover:text-stone-800">✕</button>
@@ -280,10 +272,9 @@
         </div>
     </div>
 
-    <!-- Seção Sobre Mavy -->
     <section id="sobre" class="max-w-7xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-20 items-center border-t border-stone-200">
         <div class="relative">
-            <img src="images/sobre.jpg" alt="Sobre a Mavy" class="rounded-[40px] w-full h-[550px] object-cover shadow-lg">
+            <img src="sobre.jpg" alt="Sobre a Mavy" class="rounded-[40px] w-full h-[550px] object-cover shadow-lg">
             <div class="absolute -top-10 -right-10 w-40 h-40 bg-[#fdfaf7] rounded-full border border-stone-100 flex items-center justify-center p-6 text-center animate-pulse">
                 <span class="text-[10px] font-bold uppercase tracking-widest text-stone-400 leading-tight">Qualidade Premium Garantida</span>
             </div>
@@ -308,7 +299,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="bg-white border-t border-stone-100 py-12">
         <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
             <div class="flex flex-col items-center md:items-start">
@@ -330,57 +320,57 @@
 
         const produtos = [
             // FEMININOS (Brand Collection)
-            { id: 1, nome: "Good Girl (No. 126)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "images/126.jpg", desc: "Uma fragrância audaciosa e sofisticada.\nInspirado no Carolina Herrera.", destaque: true },
-            { id: 2, nome: "Lady Million (No. 105)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "images/105.jpg", desc: "Elegância e poder.\nInspirado no Paco Rabanne.", destaque: false },
-            { id: 11, nome: "Animale (No. 190)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "images/190.jpg", desc: "Aroma instintivo e marcante.", destaque: false },
-            { id: 13, nome: "212 Wild Party (No. 078)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "images/078.jpg", desc: "Energia pura para a noite.", destaque: false },
-            { id: 14, nome: "Decadence (No. 221)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "images/221.jpg", desc: "Luxo e glamour.", destaque: false },
-            { id: 15, nome: "My Way (No. 188)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "images/188.jpg", desc: "Eu sou o que eu vivo.", destaque: false },
-            { id: 16, nome: "La Nuit Vanille (No. 212)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "images/212.jpg", desc: "Doçura noturna envolvente.", destaque: false },
-            { id: 17, nome: "Midnight Rose (No. 048)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "images/048.jpg", desc: "O encanto da rosa à meia-noite.", destaque: false },
-            { id: 18, nome: "La Nuit Trésor (No. 069)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "images/069.jpg", desc: "Um diamante negro da perfumaria.", destaque: false },
-            { id: 19, nome: "Olympea (No. 087)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "images/087.jpg", desc: "A deusa moderna.", destaque: false },
+            { id: 1, nome: "Good Girl (No. 126)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "126.jpg", desc: "Uma fragrância audaciosa e sofisticada.\nInspirado no Carolina Herrera.", destaque: true },
+            { id: 2, nome: "Lady Million (No. 105)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "105.jpg", desc: "Elegância e poder.\nInspirado no Paco Rabanne.", destaque: false },
+            { id: 11, nome: "Animale (No. 190)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "190.jpg", desc: "Aroma instintivo e marcante.", destaque: false },
+            { id: 13, nome: "212 Wild Party (No. 078)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "078.jpg", desc: "Energia pura para a noite.", destaque: false },
+            { id: 14, nome: "Decadence (No. 221)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "221.jpg", desc: "Luxo e glamour.", destaque: false },
+            { id: 15, nome: "My Way (No. 188)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "188.jpg", desc: "Eu sou o que eu vivo.", destaque: false },
+            { id: 16, nome: "La Nuit Vanille (No. 212)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "212.jpg", desc: "Doçura noturna envolvente.", destaque: false },
+            { id: 17, nome: "Midnight Rose (No. 048)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "048.jpg", desc: "O encanto da rosa à meia-noite.", destaque: false },
+            { id: 18, nome: "La Nuit Trésor (No. 069)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "069.jpg", desc: "Um diamante negro da perfumaria.", destaque: false },
+            { id: 19, nome: "Olympea (No. 087)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "087.jpg", desc: "A deusa moderna.", destaque: false },
 
             // MASCULINOS (Brand Collection)
-            { id: 3, nome: "Invictus (No. 116)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "images/116.jpg", desc: "O aroma da vitória.", destaque: true },
-            { id: 4, nome: "Azzaro Pour Homme (No. 175)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "images/175.jpg", desc: "Um clássico atemporal.", destaque: false },
-            { id: 5, nome: "Pure XS (No. 178)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "images/178.jpg", desc: "Sensualidade e excesso.", destaque: false },
-            { id: 6, nome: "Invictus Victory (No. 214)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "images/214.jpg", desc: "O poder do triunfo.", destaque: false },
-            { id: 7, nome: "Le Male (No. 153)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "images/153.jpg", desc: "Virilidade e tradição.", destaque: false },
-            { id: 8, nome: "Bleu de Chanel (No. 070)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "images/070.jpg", desc: "Elegância magnética.", destaque: false },
-            { id: 9, nome: "Phantom Intense (No. 427)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "images/427.jpg", desc: "Futurismo e intensidade.", destaque: false },
-            { id: 10, nome: "Phantom (No. 296)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "images/296.jpg", desc: "O perfume moderno.", destaque: false },
-            { id: 12, nome: "212 Vip Men (No. 008)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "images/008.jpg", desc: "Você está na lista?", destaque: false },
+            { id: 3, nome: "Invictus (No. 116)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "116.jpg", desc: "O aroma da vitória.", destaque: true },
+            { id: 4, nome: "Azzaro Pour Homme (No. 175)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "175.jpg", desc: "Um clássico atemporal.", destaque: false },
+            { id: 5, nome: "Pure XS (No. 178)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "178.jpg", desc: "Sensualidade e excesso.", destaque: false },
+            { id: 6, nome: "Invictus Victory (No. 214)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "214.jpg", desc: "O poder do triunfo.", destaque: false },
+            { id: 7, nome: "Le Male (No. 153)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "153.jpg", desc: "Virilidade e tradição.", destaque: false },
+            { id: 8, nome: "Bleu de Chanel (No. 070)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "070.jpg", desc: "Elegância magnética.", destaque: false },
+            { id: 9, nome: "Phantom Intense (No. 427)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "427.jpg", desc: "Futurismo e intensidade.", destaque: false },
+            { id: 10, nome: "Phantom (No. 296)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "296.jpg", desc: "O perfume moderno.", destaque: false },
+            { id: 12, nome: "212 Vip Men (No. 008)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "008.jpg", desc: "Você está na lista?", destaque: false },
 
-            // PERFUMES ÁRABES (Cadastrados com as extensões locais baseadas nos seus códigos)
-            { id: 101, nome: "Wazeer (No. A019)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Unissex", img: "images/A019.jpg", desc: "Fragrância marcante e misteriosa.\nUma expressão premium do oriente.", destaque: false },
-            { id: 102, nome: "Sakeena (No. A037)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "images/A037.jpg", desc: "Poderosa sedução oriental.\nDoçura floral com toques exóticos.", destaque: false },
-            { id: 103, nome: "Yara da Lataffa (No. A002)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "images/A002.jpg", desc: "Sucesso mundial, cremoso e envolvente.\nFragrância doce e sofisticada.", destaque: true },
-            { id: 104, nome: "Ouro Cósmico (No. A017)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "images/A017.jpg", desc: "Um brilho estelar para sua pele.\nNotas quentes e sofisticadas.", destaque: false },
-            { id: 105, nome: "Blush Nobre (No. A025)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "images/A025.jpg", desc: "Elegante e suave.\nIdeal para mulheres marcantes.", destaque: false },
-            { id: 106, nome: "Lemon Imperiale (No. A015)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Unissex", img: "images/A015.jpg", desc: "Frescor cítrico e real.\nA assinatura perfeita para o dia a dia.", destaque: false },
-            { id: 107, nome: "Lembrança (No. A022)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "images/A022.jpg", desc: "Inesquecível e nostálgico.\nToque floral adocicado.", destaque: false },
-            { id: 108, nome: "Sabah (No. A014)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "images/A014.jpg", desc: "Elegância ao amanhecer.\nInspirado nas brisas orientais.", destaque: false },
-            { id: 109, nome: "Attar & Attar (No. A013)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "images/A013.jpg", desc: "Masculinidade marcante.\nAcordes ricos e amadeirados.", destaque: false },
-            { id: 110, nome: "Glória (No. A010)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Unissex", img: "images/A010.jpg", desc: "Um hino à sofisticação oriental.\nNotas ricas e profundas.", destaque: false },
-            { id: 111, nome: "9 da Noite / 9PM (No. A029)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "images/A029.jpg", desc: "Ideal para saídas noturnas.\nUma fragrância sedutora e jovial.", destaque: false },
-            { id: 112, nome: "Minha Essência (No. A004)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "images/A004.jpg", desc: "Sua marca registrada.\nDoçura e mistério em harmonia.", destaque: false },
-            { id: 113, nome: "Majestade (No. A001)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "images/A001.jpg", desc: "Imponente e requintado.\nAura de realeza.", destaque: true },
-            { id: 114, nome: "Nuit Précieux (No. A021)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "images/A021.jpg", desc: "Uma noite preciosa.\nNotas intensas amadeiradas.", destaque: false },
-            { id: 115, nome: "Musam Branco (No. A018)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Unissex", img: "images/A018.jpg", desc: "Fragrância limpa, requintada e fresca.\nIdeal para qualquer ocasião.", destaque: false },
-            { id: 116, nome: "O Reino (No. A031)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "images/A031.jpg", desc: "Conquiste sua presença.\nAcordes densos e quentes.", destaque: false },
-            { id: 117, nome: "Spectro (No. A020)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "images/A020.jpg", desc: "Misterioso e envolvente.\nFragrância única.", destaque: false },
-            { id: 118, nome: "Ameer (No. A038)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "images/A038.jpg", desc: "Digno de príncipes.\nFragrância imponente.", destaque: false },
-            { id: 119, nome: "Fakhar Ouro / Fakhar Gold (No. A008)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "images/A008.jpg", desc: "Ousado e luxuoso.\nNotas frutadas de extrema projeção.", destaque: false },
-            { id: 120, nome: "Fakh Preto (No. A007)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "images/A007.jpg", desc: "Escuro, denso e sofisticado.\nA escolha de destaque.", destaque: false },
-            { id: 121, nome: "Doce Mistério (No. A032)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Unissex", img: "images/A032.jpg", desc: "Gourmand envolvente.\nSensual e viciante.", destaque: false },
-            { id: 122, nome: "Fakh Rosa (No. A006)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "images/A006.jpg", desc: "Delicadeza floral nobre.\nUm romance líquido.", destaque: false },
-            { id: 123, nome: "Asad Brown (No. A034)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Unissex", img: "images/A034.jpg", desc: "Especiado quente marcante.\nForte projeção orientais.", destaque: false },
-            { id: 124, nome: "Conhaque (No. A005)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Unissex", img: "images/A005.jpg", desc: "Notas alcoólicas envolventes.\nFragrância quente de canela e madeira.", destaque: false },
-            { id: 125, nome: "Doces / Yara Candy (No. A033)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "images/A033.jpg", desc: "Uma sobremesa olfativa.\nDoce, jovial e irresistível.", destaque: false },
-            { id: 126, nome: "Rouge Âmbar (No. A026)", marca: "Perfumes Árabes", pix: 110, card: 120, genero: "Unissex", img: "images/A026.jpg", desc: "Sedução em vermelho âmbar.\nIntensidade extrema de luxo.", destaque: false },
-            { id: 127, nome: "Âmbar Real (No. A024)", marca: "Perfumes Árabes", pix: 110, card: 120, genero: "Unissex", img: "images/A024.jpg", desc: "A realeza do âmbar clássico.\nFixação duradoura excepcional.", destaque: false },
-            { id: 128, nome: "Dania (No. A040)", marca: "Perfumes Árabes", pix: 110, card: 120, genero: "Feminino", img: "images/A040.jpg", desc: "Uma joia moderna.\nDoçura real e majestosa.", destaque: false }
+            // PERFUMES ÁRABES
+            { id: 101, nome: "Wazeer (No. A019)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Unissex", img: "A019.jpg", desc: "Fragrância marcante e misteriosa.\nUma expressão premium do oriente.", destaque: false },
+            { id: 102, nome: "Sakeena (No. A037)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "A037.jpg", desc: "Poderosa sedução oriental.\nDoçura floral com toques exóticos.", destaque: false },
+            { id: 103, nome: "Yara da Lataffa (No. A002)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "A002.jpg", desc: "Sucesso mundial, cremoso e envolvente.\nFragrância doce e sofisticada.", destaque: true },
+            { id: 104, nome: "Ouro Cósmico (No. A017)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "A017.jpg", desc: "Um brilho estelar para sua pele.\nNotas quentes e sofisticadas.", destaque: false },
+            { id: 105, nome: "Blush Nobre (No. A025)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "A025.jpg", desc: "Elegante e suave.\nIdeal para mulheres marcantes.", destaque: false },
+            { id: 106, nome: "Lemon Imperiale (No. A015)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Unissex", img: "A015.jpg", desc: "Frescor cítrico e real.\nA assinatura perfeita para o dia a dia.", destaque: false },
+            { id: 107, nome: "Lembrança (No. A022)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "A022.jpg", desc: "Inesquecível e nostálgico.\nToque floral adocicado.", destaque: false },
+            { id: 108, nome: "Sabah (No. A014)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "A014.jpg", desc: "Elegância ao amanhecer.\nInspirado nas brisas orientais.", destaque: false },
+            { id: 109, nome: "Attar & Attar (No. A013)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "A013.jpg", desc: "Masculinidade marcante.\nAcordes ricos e amadeirados.", destaque: false },
+            { id: 110, nome: "Glória (No. A010)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Unissex", img: "A010.jpg", desc: "Um hino à sofisticação oriental.\nNotas ricas e profundas.", destaque: false },
+            { id: 111, nome: "9 da Noite / 9PM (No. A029)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "A029.jpg", desc: "Ideal para saídas noturnas.\nUma fragrância sedutora e jovial.", destaque: false },
+            { id: 112, nome: "Minha Essência (No. A004)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "A004.jpg", desc: "Sua marca registrada.\nDoçura e mistério em harmonia.", destaque: false },
+            { id: 113, nome: "Majestade (No. A001)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "A001.jpg", desc: "Imponente e requintado.\nAura de realeza.", destaque: true },
+            { id: 114, nome: "Nuit Précieux (No. A021)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "A021.jpg", desc: "Uma noite preciosa.\nNotas intensas amadeiradas.", destaque: false },
+            { id: 115, nome: "Musam Branco (No. A018)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Unissex", img: "A018.jpg", desc: "Fragrância limpa, requintada e fresca.\nIdeal para qualquer ocasião.", destaque: false },
+            { id: 116, nome: "O Reino (No. A031)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "A031.jpg", desc: "Conquiste sua presença.\nAcordes densos e quentes.", destaque: false },
+            { id: 117, nome: "Spectro (No. A020)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "A020.jpg", desc: "Misterioso e envolvente.\nFragrância única.", destaque: false },
+            { id: 118, nome: "Ameer (No. A038)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "A038.jpg", desc: "Digno de príncipes.\nFragrância imponente.", destaque: false },
+            { id: 119, nome: "Fakhar Ouro / Fakhar Gold (No. A008)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "A008.jpg", desc: "Ousado e luxuoso.\nNotas frutadas de extrema projeção.", destaque: false },
+            { id: 120, nome: "Fakh Preto (No. A007)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "A007.jpg", desc: "Escuro, denso e sofisticado.\nA escolha de destaque.", destaque: false },
+            { id: 121, nome: "Doce Mistério (No. A032)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Unissex", img: "A032.jpg", desc: "Gourmand envolvente.\nSensual e viciante.", destaque: false },
+            { id: 122, nome: "Fakh Rosa (No. A006)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "A006.jpg", desc: "Delicadeza floral nobre.\nUm romance líquido.", destaque: false },
+            { id: 123, nome: "Asad Brown (No. A034)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Unissex", img: "A034.jpg", desc: "Especiado quente marcante.\nForte projeção orientais.", destaque: false },
+            { id: 124, nome: "Conhaque (No. A005)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Unissex", img: "A005.jpg", desc: "Notas alcoólicas envolventes.\nFragrância quente de canela e madeira.", destaque: false },
+            { id: 125, nome: "Doces / Yara Candy (No. A033)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "A033.jpg", desc: "Uma sobremesa olfativa.\nDoce, jovial e irresistível.", destaque: false },
+            { id: 126, nome: "Rouge Âmbar (No. A026)", marca: "Perfumes Árabes", pix: 110, card: 120, genero: "Unissex", img: "A026.jpg", desc: "Sedução em vermelho âmbar.\nIntensidade extrema de luxo.", destaque: false },
+            { id: 127, nome: "Âmbar Real (No. A024)", marca: "Perfumes Árabes", pix: 110, card: 120, genero: "Unissex", img: "A024.jpg", desc: "A realeza do âmbar clássico.\nFixação duradoura excepcional.", destaque: false },
+            { id: 128, nome: "Dania (No. A040)", marca: "Perfumes Árabes", pix: 110, card: 120, genero: "Feminino", img: "A040.jpg", desc: "Uma joia moderna.\nDoçura real e majestosa.", destaque: false }
         ];
 
         let filtroMarca = 'todos';
@@ -396,7 +386,7 @@
                         <div class="text-[8px] font-bold text-stone-400 uppercase tracking-widest">${p.marca}</div>
                         <div class="text-[7px] font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800">${p.genero}</div>
                     </div>
-                    <h4 class="font-bold text-sm text-stone-800 mb-1">${p.nome}</h4>
+                    h4 class="font-bold text-sm text-stone-800 mb-1">${p.nome}</h4>
                     <p class="text-[10px] text-stone-400 mb-3 line-clamp-2">${p.desc}</p>
                     
                     <div class="space-y-1 mb-4 border-t border-stone-50 pt-3">
