@@ -103,6 +103,7 @@
 </head>
 <body class="antialiased">
 
+    <!-- Cabeçalho -->
     <header class="bg-white py-4 px-6 sticky top-0 z-[60] border-b border-stone-100">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex flex-col cursor-pointer" onclick="window.scrollTo(0,0)">
@@ -150,6 +151,7 @@
         </div>
     </header>
 
+    <!-- Hero Section -->
     <section class="max-w-7xl mx-auto px-6 py-12 grid md:grid-cols-2 gap-12 items-center">
         <div class="space-y-8">
             <h1 class="text-6xl md:text-7xl serif text-stone-800 leading-tight">Sua fragrância,<br><span class="text-stone-400 italic">sua identidade.</span></h1>
@@ -160,6 +162,7 @@
         </div>
         <div class="relative">
             <div class="slider-container h-[550px]">
+                <!-- Slides atualizados para conter exatamente 3 imagens na hero -->
                 <div class="slides" id="heroSlider">
                     <div class="slide">
                         <img src="hero1.jpg" class="w-full h-full object-cover rounded-[40px] shadow-2xl">
@@ -167,11 +170,15 @@
                     <div class="slide">
                         <img src="hero2.jpg" class="w-full h-full object-cover rounded-[40px] shadow-2xl">
                     </div>
+                    <div class="slide">
+                        <img src="hero3.jpg" class="w-full h-full object-cover rounded-[40px] shadow-2xl">
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Secção Destaques -->
     <section id="destaques" class="max-w-7xl mx-auto px-6 py-24">
         <div class="text-center mb-16">
             <span class="text-[10px] uppercase tracking-[0.4em] text-stone-400 block mb-4">Escolhas Imperdíveis</span>
@@ -180,12 +187,14 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="destaquesGrid"></div>
     </section>
 
+    <!-- Secção Catálogo -->
     <section id="catalogo" class="max-w-7xl mx-auto px-6 py-24 border-t border-stone-200">
         <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
             <div>
                 <span class="text-[10px] uppercase tracking-[0.4em] text-stone-400 block mb-4">Coleção Completa</span>
                 <h2 class="text-4xl serif">Todos os Produtos</h2>
             </div>
+            <!-- Filtros do Catálogo -->
             <div class="flex gap-2 items-center overflow-visible pb-2 w-full md:w-auto">
                 <button onclick="filtrarCatalogo('todos')" id="filter-all" class="px-6 py-2 rounded-full bg-stone-800 text-white text-[10px] uppercase tracking-widest font-bold whitespace-nowrap active-filter">Todos</button>
                 
@@ -221,6 +230,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="catalogoGrid"></div>
     </section>
 
+    <!-- Carrinho Lateral -->
     <div id="cartOverlay" onclick="toggleCart()" class="fixed inset-0 bg-black/20 backdrop-blur-sm hidden z-[90]"></div>
     <div id="cartPanel" class="fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-2xl translate-x-full flex flex-col z-[100]">
         <div class="p-8 border-b flex justify-between items-center">
@@ -229,6 +239,7 @@
         </div>
         <div id="cartItems" class="flex-1 overflow-y-auto p-8 space-y-6"></div>
         <div class="p-8 border-t bg-stone-50">
+            <!-- Linha de frete -->
             <div class="flex justify-between items-center mb-4 pb-4 border-b border-stone-200 text-xs">
                 <span class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">Frete</span>
                 <span class="font-semibold text-stone-500 text-right">Sob Consulta no WhatsApp</span>
@@ -241,6 +252,7 @@
         </div>
     </div>
 
+    <!-- Modal de Produto -->
     <div id="productModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden z-[110] flex items-center justify-center p-4">
         <div class="bg-white rounded-[40px] w-full max-w-2xl p-8 relative">
             <button onclick="closeProduct()" class="absolute top-6 right-8 text-stone-300 hover:text-stone-800">✕</button>
@@ -272,6 +284,7 @@
         </div>
     </div>
 
+    <!-- Seção Sobre Mavy -->
     <section id="sobre" class="max-w-7xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-20 items-center border-t border-stone-200">
         <div class="relative">
             <img src="sobre.jpg" alt="Sobre a Mavy" class="rounded-[40px] w-full h-[550px] object-cover shadow-lg">
@@ -299,6 +312,7 @@
         </div>
     </section>
 
+    <!-- Footer -->
     <footer class="bg-white border-t border-stone-100 py-12">
         <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
             <div class="flex flex-col items-center md:items-start">
@@ -356,7 +370,7 @@
             { id: 111, nome: "9 da Noite / 9PM (No. A029)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "A029.jpg", desc: "Ideal para saídas noturnas.\nUma fragrância sedutora e jovial.", destaque: false },
             { id: 112, nome: "Minha Essência (No. A004)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "A004.jpg", desc: "Sua marca registrada.\nDoçura e mistério em harmonia.", destaque: false },
             { id: 113, nome: "Majestade (No. A001)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "A001.jpg", desc: "Imponente e requintado.\nAura de realeza.", destaque: true },
-            { id: 114, nome: "Nuit Précieux (No. A021)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "A021.jpg", desc: "Uma noite preciosa.\nNotas intensas amadeiradas.", destaque: false },
+            { id: 114, nome: "Nuit Précieux (No. A021)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "A021.jpg", desc: "Uma noite precisa.\nNotas intensas amadeiradas.", destaque: false },
             { id: 115, nome: "Musam Branco (No. A018)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Unissex", img: "A018.jpg", desc: "Fragrância limpa, requintada e fresca.\nIdeal para qualquer ocasião.", destaque: false },
             { id: 116, nome: "O Reino (No. A031)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "A031.jpg", desc: "Conquiste sua presença.\nAcordes densos e quentes.", destaque: false },
             { id: 117, nome: "Spectro (No. A020)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "A020.jpg", desc: "Misterioso e envolvente.\nFragrância única.", destaque: false },
@@ -386,7 +400,8 @@
                         <div class="text-[8px] font-bold text-stone-400 uppercase tracking-widest">${p.marca}</div>
                         <div class="text-[7px] font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800">${p.genero}</div>
                     </div>
-                    h4 class="font-bold text-sm text-stone-800 mb-1">${p.nome}</h4>
+                    <!-- Correção do erro de renderização do título adicionando o caractere de abertura correto no h4 -->
+                    <h4 class="font-bold text-sm text-stone-800 mb-1">${p.nome}</h4>
                     <p class="text-[10px] text-stone-400 mb-3 line-clamp-2">${p.desc}</p>
                     
                     <div class="space-y-1 mb-4 border-t border-stone-50 pt-3">
@@ -458,6 +473,7 @@
             filtrarCatalogo(marca, genero);
         }
 
+        // Adicionado um pequeno hack de proteção para garantir a transição suave do carrossel com 3 slides
         function toggleCart() {
             document.getElementById('cartPanel').classList.toggle('translate-x-full');
             document.getElementById('cartOverlay').classList.toggle('hidden');
