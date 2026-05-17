@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAVY Perfumaria</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mavy-beige: #f5f0eb;
+            --mavy-brown: #b68d5d;
+            --mavy-dark: #3a2a1d;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--mavy-beige);
+            color: var(--mavy-dark);
+            margin: 0;
+            scroll-behavior: smooth;
+        }
+        .serif { font-family: 'Playfair Display', serif; }
+        
+        .btn-mavy {
+            background-color: var(--mavy-brown);
+            color: white;
+            border-radius: 9999px;
+            padding: 12px 28px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .btn-mavy:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        .product-card {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .product-card:hover { transform: translateY(-5px); }
+        
+        .product-img-container {
+            background: #f9f7f5;
+            border-radius: 12px;
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        #cartPanel {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        
+        .hidden { display: none; }
+
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 40px;
+        }
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+        }
+        .slide {
+            min-width: 100%;
+            height: 100%;
+        }
+
+        .nav-link {
+            position: relative;
+            padding-bottom: 4px;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--mavy-brown);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Cabeçalho -->
+    <header class="bg-white py-4 px-6 sticky top-0 z-[60] border-b border-stone-100">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex flex-col cursor-pointer" onclick="window.scrollTo(0,0)">
+                <span class="text-2xl font-bold tracking-[0.2em] leading-none">MAVY</span>
+                <span class="text-[7px] tracking-[0.3em] uppercase opacity-60">Perfumaria & Cosméticos</span>
+            </div>
+            
+            <nav class="hidden md:flex gap-10 text-[10px] uppercase tracking-[0.2em] font-semibold items-center">
+                <a href="#destaques" class="nav-link hover:text-amber-800 transition-colors">Destaques</a>
+                
+                <div class="relative dropdown group py-2">
+                    <button class="hover:text-amber-800 transition-colors flex items-center gap-1 uppercase tracking-[0.2em] font-bold">
+                        Perfumaria 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+                    <div class="dropdown-menu hidden absolute left-1/2 -translate-x-1/2 top-full pt-2 w-[400px]">
+                        <div class="bg-white shadow-2xl rounded-3xl border border-stone-100 overflow-hidden grid grid-cols-2 p-6 gap-8">
+                            <div class="space-y-4">
+                                <span class="text-[9px] text-amber-700 font-bold block border-b border-stone-100 pb-2 tracking-[0.3em]">BRAND COLLECTION</span>
+                                <div class="flex flex-col gap-3">
+                                    <button onclick="filtrarMenu('brand', 'Masculino')" class="text-stone-500 hover:text-stone-900 transition-colors normal-case text-sm font-medium text-left">Masculino</button>
+                                    <button onclick="filtrarMenu('brand', 'Feminino')" class="text-stone-500 hover:text-stone-900 transition-colors normal-case text-sm font-medium text-left">Feminino</button>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <span class="text-[9px] text-amber-700 font-bold block border-b border-stone-100 pb-2 tracking-[0.3em]">PERFUMES ÁRABES</span>
+                                <div class="flex flex-col gap-3">
+                                    <button onclick="filtrarMenu('arabes', 'Masculino')" class="text-stone-500 hover:text-stone-900 transition-colors normal-case text-sm font-medium text-left">Masculino</button>
+                                    <button onclick="filtrarMenu('arabes', 'Feminino')" class="text-stone-500 hover:text-stone-900 transition-colors normal-case text-sm font-medium text-left">Feminino</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#sobre" class="nav-link hover:text-amber-800 transition-colors">Sobre</a>
+            </nav>
+
+            <div class="flex items-center gap-4">
+                <button onclick="toggleCart()" class="relative p-2 bg-stone-50 rounded-full hover:bg-stone-100 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                    <span id="cartBadge" class="absolute -top-1 -right-1 bg-amber-700 text-white text-[8px] w-4 h-4 flex items-center justify-center rounded-full font-bold">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="max-w-7xl mx-auto px-6 py-12 grid md:grid-cols-2 gap-12 items-center">
+        <div class="space-y-8">
+            <h1 class="text-6xl md:text-7xl serif text-stone-800 leading-tight">Sua fragrância,<br><span class="text-stone-400 italic">sua identidade.</span></h1>
+            <p class="text-stone-500 max-w-sm text-sm leading-relaxed">Perfumes Brand Collection e Fragrâncias Árabes: a sofisticação das melhores essências do mundo ao seu alcance.</p>
+            <div class="flex gap-4">
+                <button onclick="document.getElementById('catalogo').scrollIntoView({behavior: 'smooth'})" class="btn-mavy">Explorar Catálogo</button>
+            </div>
+        </div>
+        <div class="relative">
+            <div class="slider-container h-[550px]">
+                <div class="slides" id="heroSlider">
+                    <div class="slide">
+                        <img src="images/hero1.jpg" class="w-full h-full object-cover rounded-[40px] shadow-2xl">
+                    </div>
+                    <div class="slide">
+                        <img src="images/hero2.jpg" class="w-full h-full object-cover rounded-[40px] shadow-2xl">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Secção Destaques -->
+    <section id="destaques" class="max-w-7xl mx-auto px-6 py-24">
+        <div class="text-center mb-16">
+            <span class="text-[10px] uppercase tracking-[0.4em] text-stone-400 block mb-4">Escolhas Imperdíveis</span>
+            <h2 class="text-4xl serif">Produtos em Destaque</h2>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="destaquesGrid"></div>
+    </section>
+
+    <!-- Secção Catálogo -->
+    <section id="catalogo" class="max-w-7xl mx-auto px-6 py-24 border-t border-stone-200">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+            <div>
+                <span class="text-[10px] uppercase tracking-[0.4em] text-stone-400 block mb-4">Coleção Completa</span>
+                <h2 class="text-4xl serif">Todos os Produtos</h2>
+            </div>
+            <!-- Filtros do Catálogo -->
+            <div class="flex gap-2 items-center overflow-visible pb-2 w-full md:w-auto">
+                <button onclick="filtrarCatalogo('todos')" id="filter-all" class="px-6 py-2 rounded-full bg-stone-800 text-white text-[10px] uppercase tracking-widest font-bold whitespace-nowrap active-filter">Todos</button>
+                
+                <div class="relative dropdown group">
+                    <button class="px-6 py-2 rounded-full border border-stone-200 bg-white text-stone-500 text-[10px] uppercase tracking-widest font-bold whitespace-nowrap hover:border-stone-400 transition-colors flex items-center gap-2">
+                        Perfumaria
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+                    <div class="dropdown-menu hidden absolute left-0 top-full pt-2 w-[320px] z-50">
+                        <div class="bg-white shadow-2xl rounded-2xl border border-stone-100 overflow-hidden p-4 grid grid-cols-2 gap-4">
+                            <div>
+                                <span class="text-[8px] text-amber-700 font-bold block mb-2 tracking-widest uppercase">Brand Coll.</span>
+                                <ul class="space-y-1">
+                                    <li><button onclick="filtrarCatalogo('brand', 'Masculino')" class="text-[11px] text-stone-500 hover:text-stone-900 block py-1 w-full text-left">Masculino</button></li>
+                                    <li><button onclick="filtrarCatalogo('brand', 'Feminino')" class="text-[11px] text-stone-500 hover:text-stone-900 block py-1 w-full text-left">Feminino</button></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <span class="text-[8px] text-amber-700 font-bold block mb-2 tracking-widest uppercase">Árabes</span>
+                                <ul class="space-y-1">
+                                    <li><button onclick="filtrarCatalogo('arabes', 'Masculino')" class="text-[11px] text-stone-500 hover:text-stone-900 block py-1 w-full text-left">Masculino</button></li>
+                                    <li><button onclick="filtrarCatalogo('arabes', 'Feminino')" class="text-[11px] text-stone-500 hover:text-stone-900 block py-1 w-full text-left">Feminino</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="filtrarCatalogo('body-splash')" class="px-6 py-2 rounded-full border border-stone-200 bg-white text-stone-500 text-[10px] uppercase tracking-widest font-bold whitespace-nowrap hover:border-stone-400 transition-colors">Body Splash</button>
+                <button onclick="filtrarCatalogo('hidratantes')" class="px-6 py-2 rounded-full border border-stone-200 bg-white text-stone-500 text-[10px] uppercase tracking-widest font-bold whitespace-nowrap hover:border-stone-400 transition-colors">Hidratantes</button>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="catalogoGrid"></div>
+    </section>
+
+    <!-- Carrinho Lateral -->
+    <div id="cartOverlay" onclick="toggleCart()" class="fixed inset-0 bg-black/20 backdrop-blur-sm hidden z-[90]"></div>
+    <div id="cartPanel" class="fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-2xl translate-x-full flex flex-col z-[100]">
+        <div class="p-8 border-b flex justify-between items-center">
+            <h3 class="font-bold uppercase tracking-[0.2em] text-sm">Carrinho</h3>
+            <button onclick="toggleCart()" class="text-stone-400 hover:text-stone-800">✕</button>
+        </div>
+        <div id="cartItems" class="flex-1 overflow-y-auto p-8 space-y-6"></div>
+        <div class="p-8 border-t bg-stone-50">
+            <!-- Linha de frete -->
+            <div class="flex justify-between items-center mb-4 pb-4 border-b border-stone-200 text-xs">
+                <span class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">Frete</span>
+                <span class="font-semibold text-stone-500 text-right">Sob Consulta no WhatsApp</span>
+            </div>
+            <div class="flex justify-between items-center mb-6">
+                <span class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">Total do Carrinho</span>
+                <span id="cartTotal" class="text-2xl font-bold text-amber-800">R$ 0,00</span>
+            </div>
+            <button onclick="finalizarCompra()" class="w-full bg-stone-900 text-white py-5 rounded-2xl font-bold text-xs uppercase tracking-[0.2em]">Finalizar Pedido</button>
+        </div>
+    </div>
+
+    <!-- Modal de Produto -->
+    <div id="productModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden z-[110] flex items-center justify-center p-4">
+        <div class="bg-white rounded-[40px] w-full max-w-2xl p-8 relative">
+            <button onclick="closeProduct()" class="absolute top-6 right-8 text-stone-300 hover:text-stone-800">✕</button>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-stone-50 rounded-2xl p-4 flex items-center justify-center">
+                    <img id="modalImg" src="" class="max-h-64 object-contain">
+                </div>
+                <div class="space-y-4">
+                    <h2 id="modalTitle" class="text-2xl font-bold"></h2>
+                    <div class="p-4 bg-stone-50 rounded-xl space-y-2">
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <div class="text-[9px] uppercase tracking-widest text-stone-400">Preço no Pix</div>
+                                <div class="text-2xl font-bold text-amber-800" id="modalPix"></div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-[9px] uppercase tracking-widest text-stone-400">Cartão (até 2x)</div>
+                                <div class="text-lg font-semibold text-stone-600" id="modalCard"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p id="modalDesc" class="text-sm text-stone-500 whitespace-pre-line"></p>
+                    <button onclick="addToCartFromModal()" class="w-full bg-stone-900 text-white py-4 rounded-xl font-bold uppercase tracking-widest text-[10px] flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                        Adicionar ao Carrinho
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seção Sobre Mavy -->
+    <section id="sobre" class="max-w-7xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-20 items-center border-t border-stone-200">
+        <div class="relative">
+            <img src="images/sobre.jpg" alt="Sobre a Mavy" class="rounded-[40px] w-full h-[550px] object-cover shadow-lg">
+            <div class="absolute -top-10 -right-10 w-40 h-40 bg-[#fdfaf7] rounded-full border border-stone-100 flex items-center justify-center p-6 text-center animate-pulse">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-stone-400 leading-tight">Qualidade Premium Garantida</span>
+            </div>
+        </div>
+        <div class="space-y-8">
+            <div>
+                <span class="text-[10px] uppercase tracking-[0.4em] text-stone-400 block mb-4">Nossa Essência</span>
+                <h2 class="text-5xl serif leading-tight">Beleza e cuidado em cada detalhe.</h2>
+            </div>
+            <p class="text-stone-500 text-sm leading-relaxed">A Mavy Perfumaria e Cosméticos nasceu com um propósito simples: fazer você se sentir bem, confiante e ainda mais bonito(a) todos os dias.</p>
+            <p class="text-stone-500 text-sm leading-relaxed">Nossa curadoria seleciona apenas o que há de melhor no mercado internacional e nacional, garantindo fixação, projection e a melhor experiência sensorial.</p>
+            <div class="grid grid-cols-2 gap-8 pt-8 border-t border-stone-200">
+                <div>
+                    <div class="text-3xl font-bold text-stone-800 mb-1">100%</div>
+                    <div class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">Autêntico</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-stone-800 mb-1">+2k</div>
+                    <div class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">Clientes Felizes</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-stone-100 py-12">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex flex-col items-center md:items-start">
+                <span class="text-xl font-bold tracking-[0.2em] leading-none">MAVY</span>
+                <span class="text-[6px] tracking-[0.3em] uppercase opacity-60">Perfumaria & Cosméticos</span>
+            </div>
+            <div class="text-[10px] uppercase tracking-widest text-stone-400">© 2024 Mavy Perfumaria. Todos os direitos reservados.</div>
+            <div class="flex gap-6">
+                <a href="https://www.instagram.com/mavyjoiaseperfumaria/" target="_blank" class="text-stone-400 hover:text-stone-800 transition-colors">Instagram</a>
+                <a href="https://wa.me/5585999440587" target="_blank" class="text-stone-400 hover:text-stone-800 transition-colors">WhatsApp</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const whatsappNumber = "5585999440587";
+        let cart = [];
+        let currentProduct = null;
+
+        const produtos = [
+            // FEMININOS (Brand Collection)
+            { id: 1, nome: "Good Girl (No. 126)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "images/126.jpg", desc: "Uma fragrância audaciosa e sofisticada.\nInspirado no Carolina Herrera.", destaque: true },
+            { id: 2, nome: "Lady Million (No. 105)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "images/105.jpg", desc: "Elegância e poder.\nInspirado no Paco Rabanne.", destaque: false },
+            { id: 11, nome: "Animale (No. 190)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "images/190.jpg", desc: "Aroma instintivo e marcante.", destaque: false },
+            { id: 13, nome: "212 Wild Party (No. 078)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "images/078.jpg", desc: "Energia pura para a noite.", destaque: false },
+            { id: 14, nome: "Decadence (No. 221)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "images/221.jpg", desc: "Luxo e glamour.", destaque: false },
+            { id: 15, nome: "My Way (No. 188)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "images/188.jpg", desc: "Eu sou o que eu vivo.", destaque: false },
+            { id: 16, nome: "La Nuit Vanille (No. 212)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "images/212.jpg", desc: "Doçura noturna envolvente.", destaque: false },
+            { id: 17, nome: "Midnight Rose (No. 048)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "images/048.jpg", desc: "O encanto da rosa à meia-noite.", destaque: false },
+            { id: 18, nome: "La Nuit Trésor (No. 069)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "images/069.jpg", desc: "Um diamante negro da perfumaria.", destaque: false },
+            { id: 19, nome: "Olympea (No. 087)", marca: "Brand Collection", pix: 65, card: 75, genero: "Feminino", img: "images/087.jpg", desc: "A deusa moderna.", destaque: false },
+
+            // MASCULINOS (Brand Collection)
+            { id: 3, nome: "Invictus (No. 116)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "images/116.jpg", desc: "O aroma da vitória.", destaque: true },
+            { id: 4, nome: "Azzaro Pour Homme (No. 175)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "images/175.jpg", desc: "Um clássico atemporal.", destaque: false },
+            { id: 5, nome: "Pure XS (No. 178)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "images/178.jpg", desc: "Sensualidade e excesso.", destaque: false },
+            { id: 6, nome: "Invictus Victory (No. 214)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "images/214.jpg", desc: "O poder do triunfo.", destaque: false },
+            { id: 7, nome: "Le Male (No. 153)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "images/153.jpg", desc: "Virilidade e tradição.", destaque: false },
+            { id: 8, nome: "Bleu de Chanel (No. 070)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "images/070.jpg", desc: "Elegância magnética.", destaque: false },
+            { id: 9, nome: "Phantom Intense (No. 427)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "images/427.jpg", desc: "Futurismo e intensidade.", destaque: false },
+            { id: 10, nome: "Phantom (No. 296)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "images/296.jpg", desc: "O perfume moderno.", destaque: false },
+            { id: 12, nome: "212 Vip Men (No. 008)", marca: "Brand Collection", pix: 65, card: 75, genero: "Masculino", img: "images/008.jpg", desc: "Você está na lista?", destaque: false },
+
+            // PERFUMES ÁRABES (Cadastrados com as extensões locais baseadas nos seus códigos)
+            { id: 101, nome: "Wazeer (No. A019)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Unissex", img: "images/A019.jpg", desc: "Fragrância marcante e misteriosa.\nUma expressão premium do oriente.", destaque: false },
+            { id: 102, nome: "Sakeena (No. A037)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "images/A037.jpg", desc: "Poderosa sedução oriental.\nDoçura floral com toques exóticos.", destaque: false },
+            { id: 103, nome: "Yara da Lataffa (No. A002)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "images/A002.jpg", desc: "Sucesso mundial, cremoso e envolvente.\nFragrância doce e sofisticada.", destaque: true },
+            { id: 104, nome: "Ouro Cósmico (No. A017)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "images/A017.jpg", desc: "Um brilho estelar para sua pele.\nNotas quentes e sofisticadas.", destaque: false },
+            { id: 105, nome: "Blush Nobre (No. A025)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "images/A025.jpg", desc: "Elegante e suave.\nIdeal para mulheres marcantes.", destaque: false },
+            { id: 106, nome: "Lemon Imperiale (No. A015)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Unissex", img: "images/A015.jpg", desc: "Frescor cítrico e real.\nA assinatura perfeita para o dia a dia.", destaque: false },
+            { id: 107, nome: "Lembrança (No. A022)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "images/A022.jpg", desc: "Inesquecível e nostálgico.\nToque floral adocicado.", destaque: false },
+            { id: 108, nome: "Sabah (No. A014)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "images/A014.jpg", desc: "Elegância ao amanhecer.\nInspirado nas brisas orientais.", destaque: false },
+            { id: 109, nome: "Attar & Attar (No. A013)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "images/A013.jpg", desc: "Masculinidade marcante.\nAcordes ricos e amadeirados.", destaque: false },
+            { id: 110, nome: "Glória (No. A010)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Unissex", img: "images/A010.jpg", desc: "Um hino à sofisticação oriental.\nNotas ricas e profundas.", destaque: false },
+            { id: 111, nome: "9 da Noite / 9PM (No. A029)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "images/A029.jpg", desc: "Ideal para saídas noturnas.\nUma fragrância sedutora e jovial.", destaque: false },
+            { id: 112, nome: "Minha Essência (No. A004)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "images/A004.jpg", desc: "Sua marca registrada.\nDoçura e mistério em harmonia.", destaque: false },
+            { id: 113, nome: "Majestade (No. A001)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "images/A001.jpg", desc: "Imponente e requintado.\nAura de realeza.", destaque: true },
+            { id: 114, nome: "Nuit Précieux (No. A021)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "images/A021.jpg", desc: "Uma noite preciosa.\nNotas intensas amadeiradas.", destaque: false },
+            { id: 115, nome: "Musam Branco (No. A018)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Unissex", img: "images/A018.jpg", desc: "Fragrância limpa, requintada e fresca.\nIdeal para qualquer ocasião.", destaque: false },
+            { id: 116, nome: "O Reino (No. A031)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "images/A031.jpg", desc: "Conquiste sua presença.\nAcordes densos e quentes.", destaque: false },
+            { id: 117, nome: "Spectro (No. A020)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "images/A020.jpg", desc: "Misterioso e envolvente.\nFragrância única.", destaque: false },
+            { id: 118, nome: "Ameer (No. A038)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "images/A038.jpg", desc: "Digno de príncipes.\nFragrância imponente.", destaque: false },
+            { id: 119, nome: "Fakhar Ouro / Fakhar Gold (No. A008)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "images/A008.jpg", desc: "Ousado e luxuoso.\nNotas frutadas de extrema projeção.", destaque: false },
+            { id: 120, nome: "Fakh Preto (No. A007)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Masculino", img: "images/A007.jpg", desc: "Escuro, denso e sofisticado.\nA escolha de destaque.", destaque: false },
+            { id: 121, nome: "Doce Mistério (No. A032)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Unissex", img: "images/A032.jpg", desc: "Gourmand envolvente.\nSensual e viciante.", destaque: false },
+            { id: 122, nome: "Fakh Rosa (No. A006)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "images/A006.jpg", desc: "Delicadeza floral nobre.\nUm romance líquido.", destaque: false },
+            { id: 123, nome: "Asad Brown (No. A034)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Unissex", img: "images/A034.jpg", desc: "Especiado quente marcante.\nForte projeção orientais.", destaque: false },
+            { id: 124, nome: "Conhaque (No. A005)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Unissex", img: "images/A005.jpg", desc: "Notas alcoólicas envolventes.\nFragrância quente de canela e madeira.", destaque: false },
+            { id: 125, nome: "Doces / Yara Candy (No. A033)", marca: "Perfumes Árabes", pix: 85, card: 95, genero: "Feminino", img: "images/A033.jpg", desc: "Uma sobremesa olfativa.\nDoce, jovial e irresistível.", destaque: false },
+            { id: 126, nome: "Rouge Âmbar (No. A026)", marca: "Perfumes Árabes", pix: 110, card: 120, genero: "Unissex", img: "images/A026.jpg", desc: "Sedução em vermelho âmbar.\nIntensidade extrema de luxo.", destaque: false },
+            { id: 127, nome: "Âmbar Real (No. A024)", marca: "Perfumes Árabes", pix: 110, card: 120, genero: "Unissex", img: "images/A024.jpg", desc: "A realeza do âmbar clássico.\nFixação duradoura excepcional.", destaque: false },
+            { id: 128, nome: "Dania (No. A040)", marca: "Perfumes Árabes", pix: 110, card: 120, genero: "Feminino", img: "images/A040.jpg", desc: "Uma joia moderna.\nDoçura real e majestosa.", destaque: false }
+        ];
+
+        let filtroMarca = 'todos';
+        let filtroGenero = 'todos';
+
+        function createCard(p) {
+            return `
+                <div class="product-card" onclick="openProduct(${p.id})">
+                    <div class="product-img-container">
+                        <img src="${p.img}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400?text=${p.nome.split(' ')[0]}'">
+                    </div>
+                    <div class="flex justify-between items-center mb-1">
+                        <div class="text-[8px] font-bold text-stone-400 uppercase tracking-widest">${p.marca}</div>
+                        <div class="text-[7px] font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800">${p.genero}</div>
+                    </div>
+                    <h4 class="font-bold text-sm text-stone-800 mb-1">${p.nome}</h4>
+                    <p class="text-[10px] text-stone-400 mb-3 line-clamp-2">${p.desc}</p>
+                    
+                    <div class="space-y-1 mb-4 border-t border-stone-50 pt-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-[8px] text-stone-400 uppercase font-bold">Pix</span>
+                            <span class="text-amber-800 font-bold text-sm">R$ ${p.pix.toFixed(2)}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-[8px] text-stone-400 uppercase font-bold">Cartão (até 2x)</span>
+                            <span class="text-stone-600 font-semibold text-xs">R$ ${p.card.toFixed(2)}</span>
+                        </div>
+                    </div>
+
+                    <button onclick="event.stopPropagation(); addToCart(${p.id})" class="w-full bg-stone-50 py-3 rounded-xl text-[9px] font-bold uppercase tracking-widest hover:bg-stone-900 hover:text-white transition-all flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                        Adicionar
+                    </button>
+                </div>
+            `;
+        }
+
+        function render(marca = 'todos', genero = 'todos') {
+            filtroMarca = marca;
+            filtroGenero = genero;
+
+            const destaquesGrid = document.getElementById('destaquesGrid');
+            const catalogoGrid = document.getElementById('catalogoGrid');
+
+            const destaques = produtos.filter(p => p.destaque);
+            destaquesGrid.innerHTML = destaques.map(createCard).join('');
+
+            const filtrados = produtos.filter(p => {
+                let matchMarca = false;
+                
+                if (marca === 'todos') {
+                    matchMarca = true;
+                } else if (marca === 'brand') {
+                    matchMarca = p.marca === 'Brand Collection';
+                } else if (marca === 'arabes') {
+                    matchMarca = p.marca === 'Perfumes Árabes';
+                } else {
+                    matchMarca = p.marca.toLowerCase().includes(marca);
+                }
+
+                const matchGenero = (genero === 'todos') 
+                    ? true 
+                    : (p.genero === genero || p.genero === 'Unissex');
+
+                return matchMarca && matchGenero;
+            });
+
+            catalogoGrid.innerHTML = filtrados.map(createCard).join('');
+        }
+
+        function filtrarCatalogo(marca, genero = 'todos') {
+            const allBtn = document.getElementById('filter-all');
+            if (marca === 'todos' && genero === 'todos') {
+                allBtn.classList.add('bg-stone-800', 'text-white');
+                allBtn.classList.remove('border', 'border-stone-200', 'bg-white', 'text-stone-500');
+            } else {
+                allBtn.classList.remove('bg-stone-800', 'text-white');
+                allBtn.classList.add('border', 'border-stone-200', 'bg-white', 'text-stone-500');
+            }
+            render(marca, genero);
+            document.getElementById('catalogo').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function filtrarMenu(marca, genero) {
+            filtrarCatalogo(marca, genero);
+        }
+
+        function toggleCart() {
+            document.getElementById('cartPanel').classList.toggle('translate-x-full');
+            document.getElementById('cartOverlay').classList.toggle('hidden');
+        }
+
+        function openProduct(id) {
+            const p = produtos.find(x => x.id === id);
+            currentProduct = p;
+            document.getElementById('modalTitle').innerText = p.nome;
+            document.getElementById('modalPix').innerText = `R$ ${p.pix.toFixed(2)}`;
+            document.getElementById('modalCard').innerText = `R$ ${p.card.toFixed(2)}`;
+            document.getElementById('modalImg').src = p.img;
+            document.getElementById('modalDesc').innerText = p.desc;
+            document.getElementById('productModal').classList.remove('hidden');
+        }
+
+        function closeProduct() {
+            document.getElementById('productModal').classList.add('hidden');
+        }
+
+        function addToCart(id) {
+            const p = produtos.find(x => x.id === id);
+            const item = cart.find(x => x.id === id);
+            if(item) {
+                item.qty++;
+            } else {
+                cart.push({...p, qty: 1, metodoPagamento: 'pix'});
+            }
+            updateCart();
+        }
+
+        function addToCartFromModal() {
+            if(currentProduct) {
+                addToCart(currentProduct.id);
+                closeProduct();
+                toggleCart();
+            }
+        }
+
+        function mudarMetodoPagamento(index, metodo) {
+            cart[index].metodoPagamento = metodo;
+            updateCart();
+        }
+
+        function removerDoCarrinho(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function updateCart() {
+            const container = document.getElementById('cartItems');
+            const total = document.getElementById('cartTotal');
+            const badge = document.getElementById('cartBadge');
+            
+            badge.innerText = cart.reduce((s, i) => s + i.qty, 0);
+            
+            if(cart.length === 0) {
+                container.innerHTML = `<p class="text-center text-stone-400 text-xs">Seu carrinho está vazio.</p>`;
+                total.innerText = "R$ 0,00";
+                return;
+            }
+
+            let sum = 0;
+            container.innerHTML = cart.map((item, idx) => {
+                const precoAtivo = item.metodoPagamento === 'pix' ? item.pix : item.card;
+                sum += precoAtivo * item.qty;
+                
+                return `
+                    <div class="bg-stone-50 p-4 rounded-xl border border-stone-100 flex flex-col gap-3">
+                        <div class="flex justify-between items-start text-xs">
+                            <div class="pr-2 min-w-0">
+                                <div class="font-bold uppercase truncate text-stone-800">${item.nome}</div>
+                                <div class="text-stone-400 mt-0.5">${item.qty}x de R$ ${precoAtivo.toFixed(2)}</div>
+                            </div>
+                            <button onclick="removerDoCarrinho(${idx})" class="text-stone-400 hover:text-red-500 transition-colors">✕</button>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-1 bg-white p-0.5 rounded-lg border border-stone-150 text-[9px] font-bold">
+                            <button onclick="mudarMetodoPagamento(${idx}, 'pix')" class="py-1.5 rounded-md transition-all ${item.metodoPagamento === 'pix' ? 'bg-amber-800 text-white shadow-sm' : 'text-stone-500 hover:bg-stone-50'}">
+                                Pix (R$ ${item.pix.toFixed(2)})
+                            </button>
+                            <button onclick="mudarMetodoPagamento(${idx}, 'cartao')" class="py-1.5 rounded-md transition-all ${item.metodoPagamento === 'cartao' ? 'bg-amber-800 text-white shadow-sm' : 'text-stone-500 hover:bg-stone-50'}">
+                                Cartão (R$ ${item.card.toFixed(2)})
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            total.innerText = `R$ ${sum.toFixed(2)}`;
+        }
+
+        function finalizarCompra() {
+            if(cart.length === 0) return;
+            let msg = "Olá! Gostaria de encomendar as seguintes fragrâncias:\n\n";
+            let totalPedido = 0;
+            
+            cart.forEach(i => {
+                const metodo = i.metodoPagamento === 'pix' ? "Pix" : "Cartão";
+                const precoUnidade = i.metodoPagamento === 'pix' ? i.pix : i.card;
+                const subtotal = precoUnidade * i.qty;
+                totalPedido += subtotal;
+                
+                msg += `• *${i.nome}* (${i.qty}x) - Método: _${metodo}_ - R$ ${subtotal.toFixed(2)}\n`;
+            });
+            
+            msg += `\n*Total do Pedido: R$ ${totalPedido.toFixed(2)}*`;
+            msg += `\n*Frete:* Sob consulta (a combinar no envio)`;
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`);
+        }
+
+        function initHeroSlider() {
+            const slider = document.getElementById('heroSlider');
+            const slides = slider.children;
+            let current = 0;
+            setInterval(() => {
+                current = (current + 1) % slides.length;
+                slider.style.transform = `translateX(-${current * 100}%)`;
+            }, 4000);
+        }
+
+        window.onload = () => {
+            render('todos', 'todos');
+            initHeroSlider();
+        };
+    </script>
+</body>
+</html>
