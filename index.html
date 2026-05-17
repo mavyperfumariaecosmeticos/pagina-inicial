@@ -36,13 +36,18 @@
         .product-card {
             background: white;
             border-radius: 16px;
-            padding: 16px;
+            padding: 12px; /* Reduzido de 16px para se ajustar melhor em telas divididas de celular */
             box-shadow: 0 4px 20px rgba(0,0,0,0.03);
             cursor: pointer;
             transition: transform 0.3s ease;
             display: flex;
             flex-direction: column;
             height: 100%;
+        }
+        @media (min-width: 640px) {
+            .product-card {
+                padding: 16px;
+            }
         }
         .product-card:hover { transform: translateY(-5px); }
         
@@ -99,52 +104,69 @@
         .nav-link:hover::after {
             width: 100%;
         }
+
+        /* Ocultar barra de rolagem horizontal nos menus mobile mantendo a funcionalidade de arrastar */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
     </style>
 </head>
 <body class="antialiased">
 
-    <!-- Cabeçalho -->
-    <header class="bg-white py-4 px-6 sticky top-0 z-[60] border-b border-stone-100">
+    <!-- Cabeçalho responsivo -->
+    <header class="bg-white py-4 px-4 md:px-6 sticky top-0 z-[60] border-b border-stone-100">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex flex-col cursor-pointer" onclick="window.scrollTo(0,0)">
-                <span class="text-2xl font-bold tracking-[0.2em] leading-none">MAVY</span>
+                <span class="text-xl md:text-2xl font-bold tracking-[0.2em] leading-none">MAVY</span>
                 <span class="text-[7px] tracking-[0.3em] uppercase opacity-60">Perfumaria & Cosméticos</span>
             </div>
             
-            <nav class="hidden md:flex gap-10 text-[10px] uppercase tracking-[0.2em] font-semibold items-center">
+            <!-- Barra de navegação responsiva: vira carrossel horizontal de arrastar em telas pequenas -->
+            <nav class="flex overflow-x-auto no-scrollbar max-w-full md:max-w-none gap-6 md:gap-10 text-[9px] md:text-[10px] uppercase tracking-[0.15em] md:tracking-[0.2em] font-semibold items-center px-2 py-1 md:py-2 whitespace-nowrap">
                 <a href="#destaques" class="nav-link hover:text-amber-800 transition-colors">Destaques</a>
                 
-                <div class="relative dropdown group py-2">
-                    <button class="hover:text-amber-800 transition-colors flex items-center gap-1 uppercase tracking-[0.2em] font-bold">
+                <!-- Menu Dropdown de Perfumaria -->
+                <div class="relative dropdown group py-1">
+                    <button class="hover:text-amber-800 transition-colors flex items-center gap-1 uppercase tracking-[0.15em] md:tracking-[0.2em] font-bold">
                         Perfumaria 
                         <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                     </button>
-                    <div class="dropdown-menu hidden absolute left-1/2 -translate-x-1/2 top-full pt-2 w-[400px]">
-                        <div class="bg-white shadow-2xl rounded-3xl border border-stone-100 overflow-hidden grid grid-cols-2 p-6 gap-8">
+                    <!-- Mantém a modal dropdown flutuante centralizada e bem visível -->
+                    <div class="dropdown-menu hidden absolute left-1/2 -translate-x-1/2 top-full pt-2 w-[280px] md:w-[400px]">
+                        <div class="bg-white shadow-2xl rounded-3xl border border-stone-100 overflow-hidden grid grid-cols-2 p-4 md:p-6 gap-4 md:gap-8">
                             <div class="space-y-4">
-                                <span class="text-[9px] text-amber-700 font-bold block border-b border-stone-100 pb-2 tracking-[0.3em]">BRAND COLLECTION</span>
+                                <span class="text-[8px] md:text-[9px] text-amber-700 font-bold block border-b border-stone-100 pb-2 tracking-[0.3em]">BRAND COLL.</span>
                                 <div class="flex flex-col gap-3">
-                                    <button onclick="filtrarMenu('brand', 'Masculino')" class="text-stone-500 hover:text-stone-900 transition-colors normal-case text-sm font-medium text-left">Masculino</button>
-                                    <button onclick="filtrarMenu('brand', 'Feminino')" class="text-stone-500 hover:text-stone-900 transition-colors normal-case text-sm font-medium text-left">Feminino</button>
+                                    <button onclick="filtrarMenu('brand', 'Masculino')" class="text-stone-500 hover:text-stone-900 transition-colors normal-case text-xs md:text-sm font-medium text-left">Masculino</button>
+                                    <button onclick="filtrarMenu('brand', 'Feminino')" class="text-stone-500 hover:text-stone-900 transition-colors normal-case text-xs md:text-sm font-medium text-left">Feminino</button>
                                 </div>
                             </div>
                             <div class="space-y-4">
-                                <span class="text-[9px] text-amber-700 font-bold block border-b border-stone-100 pb-2 tracking-[0.3em]">PERFUMES ÁRABES</span>
+                                <span class="text-[8px] md:text-[9px] text-amber-700 font-bold block border-b border-stone-100 pb-2 tracking-[0.3em]">P. ÁRABES</span>
                                 <div class="flex flex-col gap-3">
-                                    <button onclick="filtrarMenu('arabes', 'Masculino')" class="text-stone-500 hover:text-stone-900 transition-colors normal-case text-sm font-medium text-left">Masculino</button>
-                                    <button onclick="filtrarMenu('arabes', 'Feminino')" class="text-stone-500 hover:text-stone-900 transition-colors normal-case text-sm font-medium text-left">Feminino</button>
+                                    <button onclick="filtrarMenu('arabes', 'Masculino')" class="text-stone-500 hover:text-stone-900 transition-colors normal-case text-xs md:text-sm font-medium text-left">Masculino</button>
+                                    <button onclick="filtrarMenu('arabes', 'Feminino')" class="text-stone-500 hover:text-stone-900 transition-colors normal-case text-xs md:text-sm font-medium text-left">Feminino</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- Menus Rápidos responsivos -->
+                <button onclick="filtrarMenuComRolagem('body-splash')" class="nav-link hover:text-amber-800 transition-colors">Body Splash</button>
+                <button onclick="filtrarMenuComRolagem('hidratantes')" class="nav-link hover:text-amber-800 transition-colors">Hidratantes</button>
+                <button onclick="filtrarMenuComRolagem('maquiagens')" class="nav-link hover:text-amber-800 transition-colors">Maquiagens</button>
+
                 <a href="#sobre" class="nav-link hover:text-amber-800 transition-colors">Sobre</a>
             </nav>
 
-            <div class="flex items-center gap-4">
-                <button onclick="toggleCart()" class="relative p-2 bg-stone-50 rounded-full hover:bg-stone-100 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            <div class="flex items-center gap-2 md:gap-4 pl-2">
+                <button onclick="toggleCart()" class="relative p-2 bg-stone-50 rounded-full hover:bg-stone-100 transition-colors shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                     <span id="cartBadge" class="absolute -top-1 -right-1 bg-amber-700 text-white text-[8px] w-4 h-4 flex items-center justify-center rounded-full font-bold">0</span>
                 </button>
             </div>
@@ -152,26 +174,26 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="max-w-7xl mx-auto px-6 py-12 grid md:grid-cols-2 gap-12 items-center">
-        <div class="space-y-8">
-            <h1 class="text-6xl md:text-7xl serif text-stone-800 leading-tight">Sua fragrância,<br><span class="text-stone-400 italic">sua identidade.</span></h1>
-            <p class="text-stone-500 max-w-sm text-sm leading-relaxed">Perfumes Brand Collection e Fragrâncias Árabes: a sofisticação das melhores essências do mundo ao seu alcance.</p>
-            <div class="flex gap-4">
+    <section class="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-12 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div class="space-y-6 md:space-y-8 text-center md:text-left">
+            <h1 class="text-4xl sm:text-5xl md:text-7xl serif text-stone-800 leading-tight">Sua fragrância,<br><span class="text-stone-400 italic">sua identidade.</span></h1>
+            <p class="text-stone-500 max-w-sm mx-auto md:mx-0 text-xs md:text-sm leading-relaxed">Perfumes Brand Collection e Fragrâncias Árabes: a sofisticação das melhores essências do mundo ao seu alcance.</p>
+            <div class="flex justify-center md:justify-start gap-4">
                 <button onclick="document.getElementById('catalogo').scrollIntoView({behavior: 'smooth'})" class="btn-mavy">Explorar Catálogo</button>
             </div>
         </div>
-        <div class="relative">
-            <div class="slider-container h-[550px]">
-                <!-- Slides atualizados para conter exatamente 3 imagens na hero -->
+        <div class="relative w-full">
+            <!-- Altura reduzida no mobile (h-[300px]) para não exigir rolagem excessiva, normal no PC -->
+            <div class="slider-container h-[300px] sm:h-[400px] md:h-[550px]">
                 <div class="slides" id="heroSlider">
                     <div class="slide">
-                        <img src="hero1.jpg" class="w-full h-full object-cover rounded-[40px] shadow-2xl">
+                        <img src="hero1.jpg" class="w-full h-full object-cover rounded-[24px] md:rounded-[40px] shadow-2xl">
                     </div>
                     <div class="slide">
-                        <img src="hero2.jpg" class="w-full h-full object-cover rounded-[40px] shadow-2xl">
+                        <img src="hero2.jpg" class="w-full h-full object-cover rounded-[24px] md:rounded-[40px] shadow-2xl">
                     </div>
                     <div class="slide">
-                        <img src="hero3.jpg" class="w-full h-full object-cover rounded-[40px] shadow-2xl">
+                        <img src="hero3.jpg" class="w-full h-full object-cover rounded-[24px] md:rounded-[40px] shadow-2xl">
                     </div>
                 </div>
             </div>
@@ -179,31 +201,32 @@
     </section>
 
     <!-- Secção Destaques -->
-    <section id="destaques" class="max-w-7xl mx-auto px-6 py-24">
-        <div class="text-center mb-16">
-            <span class="text-[10px] uppercase tracking-[0.4em] text-stone-400 block mb-4">Escolhas Imperdíveis</span>
-            <h2 class="text-4xl serif">Produtos em Destaque</h2>
+    <section id="destaques" class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-24">
+        <div class="text-center mb-10 md:mb-16">
+            <span class="text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-stone-400 block mb-2 md:mb-4">Escolhas Imperdíveis</span>
+            <h2 class="text-3xl md:text-4xl serif">Produtos em Destaque</h2>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="destaquesGrid"></div>
+        <!-- Exibição em duas colunas no celular e quatro colunas em computadores -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8" id="destaquesGrid"></div>
     </section>
 
     <!-- Secção Catálogo -->
-    <section id="catalogo" class="max-w-7xl mx-auto px-6 py-24 border-t border-stone-200">
-        <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-            <div>
-                <span class="text-[10px] uppercase tracking-[0.4em] text-stone-400 block mb-4">Coleção Completa</span>
-                <h2 class="text-4xl serif">Todos os Produtos</h2>
+    <section id="catalogo" class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-24 border-t border-stone-200">
+        <div class="flex flex-col md:flex-row justify-between items-center md:items-end mb-10 gap-6">
+            <div class="text-center md:text-left">
+                <span class="text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-stone-400 block mb-2 md:mb-4">Coleção Completa</span>
+                <h2 class="text-3xl md:text-4xl serif">Todos os Produtos</h2>
             </div>
-            <!-- Filtros do Catálogo -->
-            <div class="flex gap-2 items-center overflow-visible pb-2 w-full md:w-auto">
-                <button onclick="filtrarCatalogo('todos')" id="filter-all" class="px-6 py-2 rounded-full bg-stone-800 text-white text-[10px] uppercase tracking-widest font-bold whitespace-nowrap active-filter">Todos</button>
+            <!-- Filtros do Catálogo Mobile: Barra horizontal com rolagem de arrastar caso ocupe muito espaço -->
+            <div class="flex gap-2 items-center overflow-x-auto no-scrollbar pb-2 w-full md:w-auto px-1">
+                <button onclick="filtrarCatalogo('todos')" id="filter-all" class="px-5 py-2.5 rounded-full bg-stone-800 text-white text-[9px] md:text-[10px] uppercase tracking-widest font-bold whitespace-nowrap active-filter shadow-sm">Todos</button>
                 
-                <div class="relative dropdown group">
-                    <button class="px-6 py-2 rounded-full border border-stone-200 bg-white text-stone-500 text-[10px] uppercase tracking-widest font-bold whitespace-nowrap hover:border-stone-400 transition-colors flex items-center gap-2">
+                <div class="relative dropdown group shrink-0">
+                    <button class="px-5 py-2.5 rounded-full border border-stone-200 bg-white text-stone-500 text-[9px] md:text-[10px] uppercase tracking-widest font-bold whitespace-nowrap hover:border-stone-400 transition-colors flex items-center gap-2">
                         Perfumaria
                         <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                     </button>
-                    <div class="dropdown-menu hidden absolute left-0 top-full pt-2 w-[320px] z-50">
+                    <div class="dropdown-menu hidden absolute left-0 md:left-auto md:right-0 top-full pt-2 w-[280px] z-50">
                         <div class="bg-white shadow-2xl rounded-2xl border border-stone-100 overflow-hidden p-4 grid grid-cols-2 gap-4">
                             <div>
                                 <span class="text-[8px] text-amber-700 font-bold block mb-2 tracking-widest uppercase">Brand Coll.</span>
@@ -223,59 +246,62 @@
                     </div>
                 </div>
 
-                <button onclick="filtrarCatalogo('body-splash')" class="px-6 py-2 rounded-full border border-stone-200 bg-white text-stone-500 text-[10px] uppercase tracking-widest font-bold whitespace-nowrap hover:border-stone-400 transition-colors">Body Splash</button>
-                <button onclick="filtrarCatalogo('hidratantes')" class="px-6 py-2 rounded-full border border-stone-200 bg-white text-stone-500 text-[10px] uppercase tracking-widest font-bold whitespace-nowrap hover:border-stone-400 transition-colors">Hidratantes</button>
+                <button onclick="filtrarCatalogo('body-splash')" class="px-5 py-2.5 rounded-full border border-stone-200 bg-white text-stone-500 text-[9px] md:text-[10px] uppercase tracking-widest font-bold whitespace-nowrap hover:border-stone-400 transition-colors shrink-0">Body Splash</button>
+                <button onclick="filtrarCatalogo('hidratantes')" class="px-5 py-2.5 rounded-full border border-stone-200 bg-white text-stone-500 text-[9px] md:text-[10px] uppercase tracking-widest font-bold whitespace-nowrap hover:border-stone-400 transition-colors shrink-0">Hidratantes</button>
+                <button onclick="filtrarCatalogo('maquiagens')" class="px-5 py-2.5 rounded-full border border-stone-200 bg-white text-stone-500 text-[9px] md:text-[10px] uppercase tracking-widest font-bold whitespace-nowrap hover:border-stone-400 transition-colors shrink-0">Maquiagens</button>
             </div>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="catalogoGrid"></div>
+        <!-- Exibição em duas colunas no celular e quatro colunas em computadores para o catálogo geral -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8" id="catalogoGrid"></div>
     </section>
 
-    <!-- Carrinho Lateral -->
+    <!-- Carrinho Lateral responsivo -->
     <div id="cartOverlay" onclick="toggleCart()" class="fixed inset-0 bg-black/20 backdrop-blur-sm hidden z-[90]"></div>
-    <div id="cartPanel" class="fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-2xl translate-x-full flex flex-col z-[100]">
-        <div class="p-8 border-b flex justify-between items-center">
+    <div id="cartPanel" class="fixed top-0 right-0 h-full w-full sm:max-w-sm bg-white shadow-2xl translate-x-full flex flex-col z-[100]">
+        <div class="p-6 md:p-8 border-b flex justify-between items-center">
             <h3 class="font-bold uppercase tracking-[0.2em] text-sm">Carrinho</h3>
-            <button onclick="toggleCart()" class="text-stone-400 hover:text-stone-800">✕</button>
+            <button onclick="toggleCart()" class="text-stone-400 hover:text-stone-800 p-2 text-lg">✕</button>
         </div>
-        <div id="cartItems" class="flex-1 overflow-y-auto p-8 space-y-6"></div>
-        <div class="p-8 border-t bg-stone-50">
+        <div id="cartItems" class="flex-1 overflow-y-auto p-6 md:p-8 space-y-4 md:space-y-6"></div>
+        <div class="p-6 md:p-8 border-t bg-stone-50">
             <!-- Linha de frete -->
             <div class="flex justify-between items-center mb-4 pb-4 border-b border-stone-200 text-xs">
                 <span class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">Frete</span>
-                <span class="font-semibold text-stone-500 text-right">Sob Consulta no WhatsApp</span>
+                <span class="font-semibold text-stone-500 text-right text-[11px] sm:text-xs">Sob Consulta no WhatsApp</span>
             </div>
             <div class="flex justify-between items-center mb-6">
                 <span class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">Total do Carrinho</span>
-                <span id="cartTotal" class="text-2xl font-bold text-amber-800">R$ 0,00</span>
+                <span id="cartTotal" class="text-xl md:text-2xl font-bold text-amber-800">R$ 0,00</span>
             </div>
-            <button onclick="finalizarCompra()" class="w-full bg-stone-900 text-white py-5 rounded-2xl font-bold text-xs uppercase tracking-[0.2em]">Finalizar Pedido</button>
+            <button onclick="finalizarCompra()" class="w-full bg-stone-900 text-white py-4 md:py-5 rounded-2xl font-bold text-xs uppercase tracking-[0.2em] active:scale-[0.98] transition-all">Finalizar Pedido</button>
         </div>
     </div>
 
-    <!-- Modal de Produto -->
+    <!-- Modal de Produto responsivo -->
     <div id="productModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden z-[110] flex items-center justify-center p-4">
-        <div class="bg-white rounded-[40px] w-full max-w-2xl p-8 relative">
-            <button onclick="closeProduct()" class="absolute top-6 right-8 text-stone-300 hover:text-stone-800">✕</button>
-            <div class="grid md:grid-cols-2 gap-8">
+        <!-- Scroll interno no mobile para garantir que caiba em qualquer tela de smartphone -->
+        <div class="bg-white rounded-[24px] md:rounded-[40px] w-full max-w-2xl p-6 md:p-8 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeProduct()" class="absolute top-4 right-4 md:top-6 md:right-8 text-stone-300 hover:text-stone-800 p-2 text-lg">✕</button>
+            <div class="grid md:grid-cols-2 gap-6 md:gap-8">
                 <div class="bg-stone-50 rounded-2xl p-4 flex items-center justify-center">
-                    <img id="modalImg" src="" class="max-h-64 object-contain">
+                    <img id="modalImg" src="" class="max-h-48 md:max-h-64 object-contain">
                 </div>
                 <div class="space-y-4">
-                    <h2 id="modalTitle" class="text-2xl font-bold"></h2>
+                    <h2 id="modalTitle" class="text-xl md:text-2xl font-bold"></h2>
                     <div class="p-4 bg-stone-50 rounded-xl space-y-2">
                         <div class="flex justify-between items-end">
                             <div>
-                                <div class="text-[9px] uppercase tracking-widest text-stone-400">Preço no Pix</div>
-                                <div class="text-2xl font-bold text-amber-800" id="modalPix"></div>
+                                <div class="text-[8px] md:text-[9px] uppercase tracking-widest text-stone-400">Preço no Pix</div>
+                                <div class="text-xl md:text-2xl font-bold text-amber-800" id="modalPix"></div>
                             </div>
                             <div class="text-right">
-                                <div class="text-[9px] uppercase tracking-widest text-stone-400">Cartão (até 2x)</div>
-                                <div class="text-lg font-semibold text-stone-600" id="modalCard"></div>
+                                <div class="text-[8px] md:text-[9px] uppercase tracking-widest text-stone-400">Cartão (até 2x)</div>
+                                <div class="text-sm md:text-lg font-semibold text-stone-600" id="modalCard"></div>
                             </div>
                         </div>
                     </div>
-                    <p id="modalDesc" class="text-sm text-stone-500 whitespace-pre-line"></p>
-                    <button onclick="addToCartFromModal()" class="w-full bg-stone-900 text-white py-4 rounded-xl font-bold uppercase tracking-widest text-[10px] flex items-center justify-center gap-2">
+                    <p id="modalDesc" class="text-xs md:text-sm text-stone-500 whitespace-pre-line"></p>
+                    <button onclick="addToCartFromModal()" class="w-full bg-stone-900 text-white py-4 rounded-xl font-bold uppercase tracking-widest text-[9px] md:text-[10px] flex items-center justify-center gap-2 active:scale-[0.98] transition-all">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                         Adicionar ao Carrinho
                     </button>
@@ -284,45 +310,71 @@
         </div>
     </div>
 
-    <!-- Seção Sobre Mavy -->
-    <section id="sobre" class="max-w-7xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-20 items-center border-t border-stone-200">
-        <div class="relative">
-            <img src="sobre.jpg" alt="Sobre a Mavy" class="rounded-[40px] w-full h-[550px] object-cover shadow-lg">
-            <div class="absolute -top-10 -right-10 w-40 h-40 bg-[#fdfaf7] rounded-full border border-stone-100 flex items-center justify-center p-6 text-center animate-pulse">
-                <span class="text-[10px] font-bold uppercase tracking-widest text-stone-400 leading-tight">Qualidade Premium Garantida</span>
+    <!-- Modal Pop-up Adicionado ao Carrinho responsivo -->
+    <div id="addedToCartModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden z-[120] flex items-center justify-center p-4">
+        <div class="bg-white rounded-[24px] md:rounded-[32px] w-full max-w-sm p-6 text-center space-y-6 relative shadow-2xl border border-stone-100">
+            <button onclick="closeAddedModal()" class="absolute top-3 right-4 text-stone-300 hover:text-stone-800 p-2">✕</button>
+            
+            <div class="w-14 h-14 bg-amber-50 rounded-full flex items-center justify-center mx-auto text-amber-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            </div>
+            
+            <div class="space-y-2">
+                <h3 class="text-base md:text-lg font-bold text-stone-800">Produto Adicionado!</h3>
+                <p id="addedModalMessage" class="text-xs text-stone-500 leading-relaxed"></p>
+            </div>
+            
+            <div class="flex flex-col gap-2 pt-2">
+                <button onclick="openCartFromAddedModal()" class="w-full bg-stone-900 hover:bg-stone-850 text-white py-3 md:py-3.5 rounded-xl font-bold uppercase tracking-widest text-[9px] md:text-[10px]">
+                    Ir para o Carrinho
+                </button>
+                <button onclick="closeAddedModal()" class="w-full border border-stone-200 hover:bg-stone-50 text-stone-600 py-3 md:py-3.5 rounded-xl font-bold uppercase tracking-widest text-[9px] md:text-[10px] transition-colors">
+                    Continuar Comprando
+                </button>
             </div>
         </div>
-        <div class="space-y-8">
-            <div>
-                <span class="text-[10px] uppercase tracking-[0.4em] text-stone-400 block mb-4">Nossa Essência</span>
-                <h2 class="text-5xl serif leading-tight">Beleza e cuidado em cada detalhe.</h2>
+    </div>
+
+    <!-- Seção Sobre Mavy -->
+    <section id="sobre" class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-24 grid md:grid-cols-2 gap-10 md:gap-20 items-center border-t border-stone-200">
+        <div class="relative">
+            <!-- Altura adaptativa no mobile -->
+            <img src="sobre.jpg" alt="Sobre a Mavy" class="rounded-[24px] md:rounded-[40px] w-full h-[300px] sm:h-[400px] md:h-[550px] object-cover shadow-lg">
+            <div class="absolute -top-6 -right-6 md:-top-10 md:-right-10 w-28 h-28 md:w-40 md:h-40 bg-[#fdfaf7] rounded-full border border-stone-100 flex items-center justify-center p-3 md:p-6 text-center animate-pulse">
+                <span class="text-[8px] md:text-[10px] font-bold uppercase tracking-widest text-stone-400 leading-tight">Qualidade Premium Garantida</span>
             </div>
-            <p class="text-stone-500 text-sm leading-relaxed">A Mavy Perfumaria e Cosméticos nasceu com um propósito simples: fazer você se sentir bem, confiante e ainda mais bonito(a) todos os dias.</p>
-            <p class="text-stone-500 text-sm leading-relaxed">Nossa curadoria seleciona apenas o que há de melhor no mercado internacional e nacional, garantindo fixação, projection e a melhor experiência sensorial.</p>
-            <div class="grid grid-cols-2 gap-8 pt-8 border-t border-stone-200">
+        </div>
+        <div class="space-y-6 md:space-y-8 text-center md:text-left">
+            <div>
+                <span class="text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-stone-400 block mb-2 md:mb-4">Nossa Essência</span>
+                <h2 class="text-3xl md:text-5xl serif leading-tight">Beleza e cuidado em cada detalhe.</h2>
+            </div>
+            <p class="text-stone-500 text-xs md:text-sm leading-relaxed">A Mavy Perfumaria e Cosméticos nasceu com um propósito simples: fazer você se sentir bem, confiante e ainda mais bonito(a) todos os dias.</p>
+            <p class="text-stone-500 text-xs md:text-sm leading-relaxed">Nossa curadoria seleciona apenas o que há de melhor no mercado internacional e nacional, garantindo fixação, projection e a melhor experiência sensorial.</p>
+            <div class="grid grid-cols-2 gap-4 md:gap-8 pt-6 md:pt-8 border-t border-stone-200">
                 <div>
-                    <div class="text-3xl font-bold text-stone-800 mb-1">100%</div>
-                    <div class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">Autêntico</div>
+                    <div class="text-2xl md:text-3xl font-bold text-stone-800 mb-1">100%</div>
+                    <div class="text-[9px] md:text-[10px] uppercase tracking-widest text-stone-400 font-bold">Autêntico</div>
                 </div>
                 <div>
-                    <div class="text-3xl font-bold text-stone-800 mb-1">+2k</div>
-                    <div class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">Clientes Felizes</div>
+                    <div class="text-2xl md:text-3xl font-bold text-stone-800 mb-1">+2k</div>
+                    <div class="text-[9px] md:text-[10px] uppercase tracking-widest text-stone-400 font-bold">Clientes Felizes</div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-stone-100 py-12">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+    <footer class="bg-white border-t border-stone-100 py-8 md:py-12">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8 text-center md:text-left">
             <div class="flex flex-col items-center md:items-start">
                 <span class="text-xl font-bold tracking-[0.2em] leading-none">MAVY</span>
-                <span class="text-[6px] tracking-[0.3em] uppercase opacity-60">Perfumaria & Cosméticos</span>
+                <span class="text-[6px] tracking-[0.3em] uppercase opacity-60 mt-1">Perfumaria & Cosméticos</span>
             </div>
-            <div class="text-[10px] uppercase tracking-widest text-stone-400">© 2024 Mavy Perfumaria. Todos os direitos reservados.</div>
+            <div class="text-[9px] md:text-[10px] uppercase tracking-widest text-stone-400">© 2024 Mavy Perfumaria. Todos os direitos reservados.</div>
             <div class="flex gap-6">
-                <a href="https://www.instagram.com/mavyjoiaseperfumaria/" target="_blank" class="text-stone-400 hover:text-stone-800 transition-colors">Instagram</a>
-                <a href="https://wa.me/5585999440587" target="_blank" class="text-stone-400 hover:text-stone-800 transition-colors">WhatsApp</a>
+                <a href="https://www.instagram.com/mavyjoiaseperfumaria/" target="_blank" class="text-stone-400 hover:text-stone-800 transition-colors text-xs uppercase tracking-widest font-semibold">Instagram</a>
+                <a href="https://wa.me/5585999440587" target="_blank" class="text-stone-400 hover:text-stone-800 transition-colors text-xs uppercase tracking-widest font-semibold">WhatsApp</a>
             </div>
         </div>
     </footer>
@@ -397,26 +449,26 @@
                         <img src="${p.img}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400?text=${p.nome.split(' ')[0]}'">
                     </div>
                     <div class="flex justify-between items-center mb-1">
-                        <div class="text-[8px] font-bold text-stone-400 uppercase tracking-widest">${p.marca}</div>
-                        <div class="text-[7px] font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800">${p.genero}</div>
+                        <div class="text-[7px] md:text-[8px] font-bold text-stone-400 uppercase tracking-widest">${p.marca}</div>
+                        <div class="text-[6px] md:text-[7px] font-bold px-1.5 py-0.5 rounded bg-amber-50 text-amber-800">${p.genero}</div>
                     </div>
-                    <!-- Correção do erro de renderização do título adicionando o caractere de abertura correto no h4 -->
-                    <h4 class="font-bold text-sm text-stone-800 mb-1">${p.nome}</h4>
-                    <p class="text-[10px] text-stone-400 mb-3 line-clamp-2">${p.desc}</p>
+                    <!-- Título do produto com correção de renderização e tamanho responsivo -->
+                    <h4 class="font-bold text-xs md:text-sm text-stone-800 mb-1 line-clamp-1">${p.nome}</h4>
+                    <p class="text-[9px] md:text-[10px] text-stone-400 mb-2 md:mb-3 line-clamp-2">${p.desc}</p>
                     
-                    <div class="space-y-1 mb-4 border-t border-stone-50 pt-3">
+                    <div class="space-y-1 mb-3 md:mb-4 border-t border-stone-50 pt-2 md:pt-3 mt-auto">
                         <div class="flex justify-between items-center">
-                            <span class="text-[8px] text-stone-400 uppercase font-bold">Pix</span>
-                            <span class="text-amber-800 font-bold text-sm">R$ ${p.pix.toFixed(2)}</span>
+                            <span class="text-[7px] md:text-[8px] text-stone-400 uppercase font-bold">Pix</span>
+                            <span class="text-amber-800 font-bold text-xs md:text-sm">R$ ${p.pix.toFixed(2)}</span>
                         </div>
                         <div class="flex justify-between items-center">
-                            <span class="text-[8px] text-stone-400 uppercase font-bold">Cartão (até 2x)</span>
-                            <span class="text-stone-600 font-semibold text-xs">R$ ${p.card.toFixed(2)}</span>
+                            <span class="text-[7px] md:text-[8px] text-stone-400 uppercase font-bold">Cartão</span>
+                            <span class="text-stone-600 font-semibold text-[10px] md:text-xs">R$ ${p.card.toFixed(2)}</span>
                         </div>
                     </div>
 
-                    <button onclick="event.stopPropagation(); addToCart(${p.id})" class="w-full bg-stone-50 py-3 rounded-xl text-[9px] font-bold uppercase tracking-widest hover:bg-stone-900 hover:text-white transition-all flex items-center justify-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                    <button onclick="event.stopPropagation(); addToCart(${p.id})" class="w-full bg-stone-50 py-2.5 rounded-xl text-[8px] md:text-[9px] font-bold uppercase tracking-widest hover:bg-stone-900 hover:text-white transition-all flex items-center justify-center gap-1.5 active:scale-[0.97]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                         Adicionar
                     </button>
                 </div>
@@ -466,14 +518,27 @@
                 allBtn.classList.add('border', 'border-stone-200', 'bg-white', 'text-stone-500');
             }
             render(marca, genero);
-            document.getElementById('catalogo').scrollIntoView({ behavior: 'smooth' });
+            
+            // Rolagem suave com folga extra para compensar o cabeçalho fixo no celular
+            const offset = 80;
+            const element = document.getElementById('catalogo');
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+            
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth"
+            });
         }
 
         function filtrarMenu(marca, genero) {
             filtrarCatalogo(marca, genero);
         }
 
-        // Adicionado um pequeno hack de proteção para garantir a transição suave do carrossel com 3 slides
+        function filtrarMenuComRolagem(categoria) {
+            filtrarCatalogo(categoria);
+        }
+
         function toggleCart() {
             document.getElementById('cartPanel').classList.toggle('translate-x-full');
             document.getElementById('cartOverlay').classList.toggle('hidden');
@@ -494,6 +559,20 @@
             document.getElementById('productModal').classList.add('hidden');
         }
 
+        function showAddedModal(productName) {
+            document.getElementById('addedModalMessage').innerText = `"${productName}" já está guardado de forma segura no seu carrinho.`;
+            document.getElementById('addedToCartModal').classList.remove('hidden');
+        }
+
+        function closeAddedModal() {
+            document.getElementById('addedToCartModal').classList.add('hidden');
+        }
+
+        function openCartFromAddedModal() {
+            closeAddedModal();
+            toggleCart();
+        }
+
         function addToCart(id) {
             const p = produtos.find(x => x.id === id);
             const item = cart.find(x => x.id === id);
@@ -503,13 +582,13 @@
                 cart.push({...p, qty: 1, metodoPagamento: 'pix'});
             }
             updateCart();
+            showAddedModal(p.nome);
         }
 
         function addToCartFromModal() {
             if(currentProduct) {
                 addToCart(currentProduct.id);
                 closeProduct();
-                toggleCart();
             }
         }
 
@@ -542,13 +621,13 @@
                 sum += precoAtivo * item.qty;
                 
                 return `
-                    <div class="bg-stone-50 p-4 rounded-xl border border-stone-100 flex flex-col gap-3">
+                    <div class="bg-stone-50 p-3 sm:p-4 rounded-xl border border-stone-100 flex flex-col gap-3">
                         <div class="flex justify-between items-start text-xs">
                             <div class="pr-2 min-w-0">
-                                <div class="font-bold uppercase truncate text-stone-800">${item.nome}</div>
-                                <div class="text-stone-400 mt-0.5">${item.qty}x de R$ ${precoAtivo.toFixed(2)}</div>
+                                <div class="font-bold uppercase truncate text-stone-800 text-[11px] sm:text-xs">${item.nome}</div>
+                                <div class="text-stone-400 mt-0.5 text-[10px] sm:text-[11px]">${item.qty}x de R$ ${precoAtivo.toFixed(2)}</div>
                             </div>
-                            <button onclick="removerDoCarrinho(${idx})" class="text-stone-400 hover:text-red-500 transition-colors">✕</button>
+                            <button onclick="removerDoCarrinho(${idx})" class="text-stone-400 hover:text-red-500 transition-colors p-1">✕</button>
                         </div>
                         
                         <div class="grid grid-cols-2 gap-1 bg-white p-0.5 rounded-lg border border-stone-150 text-[9px] font-bold">
